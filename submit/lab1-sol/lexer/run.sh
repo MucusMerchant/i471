@@ -2,7 +2,7 @@
 
 if [ $# -ne 1 ]
 then
-    echo "usage: $0 DATA_FILE"
+    echo "usage: lexer2.py DATA_FILE"
     exit 1
 fi
 
@@ -10,7 +10,7 @@ fi
 # node ./lexer2.mjs $1
 
 # uncomment following line for python
-# python3 ./lexer2.py $1
+python3 ./lexer2.py $1
 
 # uncomment following line for java
 # java ./lexer2.java $1
