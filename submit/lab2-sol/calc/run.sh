@@ -10,7 +10,7 @@ fi
 # node ./calc2.mjs $1
 
 # uncomment following line for python
-# python3 ./calc2.py $1
+python3 ./calc2.py $1
 
 # uncomment following line for java
 # java ./calc2.java $1

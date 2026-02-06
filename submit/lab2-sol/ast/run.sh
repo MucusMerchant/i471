@@ -10,7 +10,7 @@ fi
 # node ./ast2.mjs $1
 
 # uncomment following line for python
-# python3 ./ast2.py $1
+python3 ./ast2.py $1
 
 # uncomment following line for java
 # java ./ast2.java $1
