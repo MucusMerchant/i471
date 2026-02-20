@@ -22,7 +22,7 @@
   (check-equal? (ordered-triples1? '((4 2 3))) #f)
   (check-equal? (ordered-triples1? '()) #t)
 )
-;(ordered-triples1?-tests)
+(ordered-triples1?-tests)
 
 (define (ordered-triples2?-tests)
   (check-equal? (ordered-triples2? '((1 2 3) (4 5 6) (4 10 18))) #t)
@@ -33,7 +33,7 @@
   (check-equal? (ordered-triples2? '((4 2 3))) #f)
   (check-equal? (ordered-triples2? '()) #t)
 )
-;(ordered-triples2?-tests)
+(ordered-triples2?-tests)
 
 (define (map-ordered-triples-tests)
   (check-equal? (map-ordered-triples '((1 2 3) (4 5 6) (4 10 18))) '(#t #t #t))
@@ -44,7 +44,7 @@
   (check-equal? (map-ordered-triples '((4 2 3))) '(#f))
   (check-equal? (map-ordered-triples '()) '())
 )
-;(map-ordered-triples-tests)
+(map-ordered-triples-tests)
 
 (define (ordered-triples3?-tests)
   (check-equal? (ordered-triples3? '((1 2 3) (4 5 6) (4 10 18))) #t)
@@ -55,7 +55,7 @@
   (check-equal? (ordered-triples3? '((4 2 3))) #f)
   (check-equal? (ordered-triples3? '()) #t)
 )
-;(ordered-triples3?-tests)
+(ordered-triples3?-tests)
 
 
 
