@@ -70,7 +70,20 @@ typedef struct {
 static void
 push_point_vec(PointVec *vec, Point point)
 {
-  //TODO: copy in push_int_vec() definition and make appropriate changes
+  enum { INIT_CAPACITY = 2 }; //small init-value for debugging
+  if (vec->length >= vec->capacity) {
+    assert(vec->length == vec->capacity);
+    size_t new_capacity = vec->capacity == 0 ? INIT_CAPACITY : 2*vec->capacity;
+    vec->buffer = realloc(vec->buffer, new_capacity*sizeof(Point));
+    if (vec->buffer == NULL) {
+      fprintf(stderr, "cannot realloc vec[%zu]: %s", new_capacity,
+              strerror(errno));
+      exit(1);
+    }
+    vec->capacity = new_capacity;
+  }
+  assert(vec->length < vec->capacity);
+  vec->buffer[vec->length++] = point;
 }
 
 

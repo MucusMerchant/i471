@@ -40,11 +40,17 @@ impl fmt::Display for Point {
 fn main() {
     let ints = read_ints();
     assert!(ints.len()%2 == 0);
+
+    let mut points: Vec<Point> = Vec::new();
+    let mut pt_sq_mag: Vec<i32> = Vec::new();
+    for i in (0..ints.len()).step_by(2) {
+	    let i1 = ints[i];
+	    let i2 = ints[i + 1];
+        points.push(Point {x: i1, y: i2});
+        pt_sq_mag.push(i1*i1 + i2*i2);
+    }
     
-    //TODO: proceed as in int-vec-add.rs main(): declare points and
-    //pt_sq_mag vectors.  foreach pair of values x, y in ints, push
-    //constructed point (constructed using Point {x: x, y: y } onto
-    //points and the square of the magnitude of the point onto
-    //pt_sq_mag.  Finally println points and pt_sq_mag.
+    println!("{}", vec_str(&points));
+    println!("{}", vec_str(&pt_sq_mag));
 
 }

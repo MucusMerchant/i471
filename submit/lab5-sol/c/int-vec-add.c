@@ -73,6 +73,8 @@ int main() {
   out_int_vec(stdout, &vec2);
   out_int_vec(stdout, &sum);
 
-  //TODO: free buffer's
-
+  free(ints.buffer);
+  free(vec1.buffer);
+  free(vec2.buffer);
+  free(sum.buffer);
 }

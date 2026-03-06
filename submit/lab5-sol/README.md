@@ -1,5 +1,5 @@
-#  Lab 5 Solution
+#  Lab 5
 
-**`Name:    `** Solution <br> 
-**`B-Number:`** B01234567 <br>
-**`BU-Email:`** do-not-use@binghamton.edu <br>
+**`Name:    `** Andrew Shen-Costello <br> 
+**`B-Number:`** B00946223 <br>
+**`BU-Email:`** ashenco1@binghamton.edu <br>

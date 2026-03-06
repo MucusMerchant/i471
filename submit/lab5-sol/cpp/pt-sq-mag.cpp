@@ -37,12 +37,16 @@ int main() {
   std::vector<int> ints = read_ints();
   assert(ints.size() % 2 == 0);
 
+  std::vector<Point> points(0);
+  std::vector<int> pt_sq_mag(0);
+  assert(ints.size()%2 == 0);
 
-  //TODO: proceed as in int-vec-add.cpp main(): declare points and
-  //pt_sq_mag vectors.  foreach pair of values x, y in ints, push
-  //constructed point (constructed using Point(x, y)) onto points and
-  //the square of the magnitude of the point onto pt_sq_mag.  Finally
-  //print out points and pt_sq_mag (each followed by an endl).
-
+  for (unsigned i = 0; i < ints.size(); i += 2) {
+    int val1 = ints[i], val2 = ints[i + 1];
+    points.push_back(Point(val1, val2));
+    pt_sq_mag.push_back(val1*val1 + val2*val2);
+  }
+  std::cout << points << std::endl;
+  std::cout << pt_sq_mag << std::endl;
 
 }
