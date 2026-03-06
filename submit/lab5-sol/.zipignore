@@ -1,0 +1,7 @@
+*~
+*.bak
+.zipignore
+*/.gitignore
+*/int-vec-add
+*/pt-sq-mag
+
