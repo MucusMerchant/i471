@@ -1,0 +1,6 @@
+*~
+*.bak
+.zipignore
+.gitignore
+*/prj2-tests.scm
+
