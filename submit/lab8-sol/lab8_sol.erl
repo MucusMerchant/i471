@@ -37,12 +37,18 @@ guard_perimeter({_, Type, Dims}) when Type =:= rectangle ->
 %----------------------- points_letter_grade/1 --------------------------
 
 % see lab assignment for specs
-points_letter_grade(_Points) -> 'TODO'.
+points_letter_grade(Points) when 90 =< Points -> 'A';
+points_letter_grade(Points) when 80 =< Points, Points < 90 -> 'B';
+points_letter_grade(Points) when 70 =< Points, Points < 80 -> 'C';
+points_letter_grade(Points) when 60 =< Points, Points < 70 -> 'D';
+points_letter_grade(_) -> 'F'.
 
 %----------------------- grades_letter_grade/1 --------------------------
 
 % see lab assignment for specs
-grades_letter_grade(_Grade) -> 'TODO'.
+grades_letter_grade({_StudentId, _Category, _AssignId, Points}) ->
+    points_letter_grade(Points).
+
 
 %------------------------ shapes_server_fn ------------------------------
 
@@ -51,18 +57,18 @@ shapes_server_fn(Shapes) ->
     { ClientPid, { perims } } ->
        Perims = [ { ID, perimeter(Shape) } ||
                   Shape <- Shapes,
-		  ID <- [element(1, Shape) ]
-		],
+ ID <- [element(1, Shape) ]
+],
        ClientPid ! { self(), perims, Perims },
        shapes_server_fn(Shapes) ;
     { ClientPid, { new_shapes, Shapes1 } } ->
        ClientPid ! { self(), new_shapes },
        shapes_server_fn(Shapes1) ;
     { ClientPid, { stop } } ->
-	ClientPid ! { self(), stopped };
-    Unknown -> 
+ClientPid ! { self(), stopped };
+    Unknown ->
        io:format(standard_error, "unknown message ~p~n", [ Unknown ]),
-       shapes_server_fn(Shapes) 
+       shapes_server_fn(Shapes)
   end.
 
 start_shapes_server(Shapes) ->
@@ -73,7 +79,7 @@ send_shapes_msg(Pid, Msg) ->
   receive
     X -> X
   end.
-    
+   
 
 %------------------------ grades_server_fn ------------------------------
 
@@ -84,7 +90,7 @@ send_shapes_msg(Pid, Msg) ->
 %
 % It should handle the following messages:
 %
-%   { ClientPid, { letter_grades } }: 
+%   { ClientPid, { letter_grades } }:
 %      It should respond to `ClientPid` with a
 %      `{ ServerPid, letter_grades, LetterGrades }`
 %      message where LetterGrades is a list containing
@@ -103,17 +109,37 @@ send_shapes_msg(Pid, Msg) ->
 %      Recurse after logging an error on `standard_error`.
 %
 % *Hint*: structure your code similar to shapes_server_fn/1.
-grades_server_fn(_Grades) -> 'TODO'.
+grades_server_fn(Grades) ->
+  receive
+    { ClientPid, { letter_grades } } ->
+       LetterGrades = [ { StudentId, AssignId, grades_letter_grade({StudentId, _Category, AssignId, Points}) } ||
+                        { StudentId, _Category, AssignId, Points } <- Grades ],
+
+       ClientPid ! { self(), letter_grades, LetterGrades },
+       grades_server_fn(Grades);
+    { ClientPid, { new_grades, NewGrades } } ->
+       ClientPid ! { self(), new_grades },
+       grades_server_fn(NewGrades);
+    { ClientPid, { stop } } ->
+       ClientPid ! { self(), stopped };
+    Unknown ->
+       io:format(standard_error, "unknown message ~p~n", [ Unknown ]),
+       grades_server_fn(Grades)
+  end.
 
 % Spawn a new server process running `grades_server_fn(Grades) where
 % Grades is a list of `{ StudentId, Category, AssignId, Points }`.
 % Returns PID of newly created server.
-start_grades_server(_Grades) -> 'TODO'.
+start_grades_server(Grades) ->
+    spawn(lab8_sol, grades_server_fn, [Grades]).
 
 % Send Msg to server process `Pid`.
-send_grades_msg(_Pid, _Msg) -> 'TODO'.
-    
-
+send_grades_msg(Pid, Msg) ->
+    Pid ! { self(), Msg },
+    receive
+        X -> X
+    end.
+   
 
 %------------------------------- Shapes Data ----------------------------
 shapes1() ->
@@ -122,3 +148,5 @@ shapes2() ->
   [ { s2, square, {2} }, { c2, circle, {2} }, { r2, rectangle, {2, 2} } ].
 shapes3() ->
   [ { s3, square, {3} }, { c3, circle, {3} }, { r3, rectangle, {3, 3} } ].
+
+
